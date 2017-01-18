@@ -2,13 +2,13 @@
 
 ## 1. Prerequisites
 
-1. Google API PHP Client
+### 1. Google API PHP Client
 
 [Download](https://github.com/google/google-api-php-client/) and install google-api-php-client in plugin root path
 
 [Releases](https://github.com/google/google-api-php-client/releases)
 
-2. Google Calendar API
+### 2. Google Calendar API
 
 Make your calendar public : [Guide](https://docs.simplecalendar.io/make-google-calendar-public/)
 
