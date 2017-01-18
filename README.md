@@ -18,6 +18,10 @@ Generate a Google Calendar API KEY : [Guide](https://docs.simplecalendar.io/goog
 
 ## 2. Edit parameters
 
+```
+File: gcalendar-param.php
+```
+
 ```php
 define('GCAL_APPLICATION_NAME', 'APP_NAME');
 define('GCAL_APP_KEY', ' GOOGLE_APP_KEY');
