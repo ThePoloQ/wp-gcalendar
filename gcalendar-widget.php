@@ -68,7 +68,7 @@ class gCalendar_Widget extends WP_Widget
             if ($end != $start)            
               printf (__("From %s to %s",'gcalendar'),$start, $end);
             else
-              printf (__("The %s",'gcalendar'),$start, $end);
+              printf (__("The %s",'gcalendar'),$start);
             
             print '</div>';
             print '<div class="gcalendar-event-desc">';
