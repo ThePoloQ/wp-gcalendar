@@ -32,11 +32,10 @@ class gCalendar_Widget extends WP_Widget
         $time_format = get_option( 'time_format' );  
 
         print '<section class="widget wdiget-gcalendar">';
-        print '<span><a href="https://calendar.google.com/calendar/embed?src='.GCAL_CALENDAR_ID.'" target="_blank">'.__('Agenda','gcalendar').'</a></span>';
         if (count($results->getItems()) == 0) {
           print '<p>'.__('No upcoming events found.','gcalendar')."</p>";
         } else {
-          print "<h3 class=\"widget-title\" style=\"display: table\">".__('Upcoming Events','gcalendar')."</h3>";
+          print "<h3 class=\"widget-title\" style=\"display: table\"><span class=\"dashicons dashicons-calendar-alt\"></span>&nbsp;".__('Upcoming Events','gcalendar')."</h3>";
           print "<div class=\"gcalendar-events\">";
           foreach ($results->getItems() as $event) {
             print '<div class="gcalendar-event">';
@@ -48,12 +47,11 @@ class gCalendar_Widget extends WP_Widget
             $dtStart = $event->getStart()->getDateTime();
             
             if ($dtStart !== NULL){
-              $dStart = DateTime::createFromFormat($dtFormat, $dtStart);
-            
+              $dStart = DateTime::createFromFormat($dtFormat, $dtStart);    
               $start = date_i18n(get_option('date_format'), $dStart->getTimestamp() + $hOffset * 3600) .' @ '. date_i18n(get_option('time_format'), $dStart->getTimestamp() + $hOffset * 3600,true);
             }else{
               $dStart = DateTime::createFromFormat('Y-m-d', $event->getStart()->getDate());
-              $start = date_i18n(get_option('date_format'), $dStart->getTimestamp());
+              $start = date_i18n('d M', $dStart->getTimestamp());
             }
 
             $dtEnd = $event->getEnd()->getDateTime();
@@ -62,18 +60,24 @@ class gCalendar_Widget extends WP_Widget
               $end = date_i18n(get_option('date_format'), $dEnd->getTimestamp() + $hOffset * 3600) .' @ '. date_i18n(get_option('time_format'), $dEnd->getTimestamp() + $hOffset * 3600,true);
             }else{
               $dEnd = DateTime::createFromFormat('Y-m-d', $event->getEnd()->getDate());
-              $end = date_i18n(get_option('date_format'), $dEnd->getTimestamp() - 3600*24);
+              $end = date_i18n('d M', $dEnd->getTimestamp() - 3600*24); //goggle calculate : minus one day
             }
             
-            if ($end != $start)            
-              printf (__("From %s to %s",'gcalendar'),$start, $end);
-            else
-              printf (__("The %s",'gcalendar'),$start);
+            if (strcmp($end,$start) !==0 ){
+              if (strcmp(date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp())) == 0){ //tow hour with the same day
+                printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d', $dStart->getTimestamp()),date_i18n('M', $dEnd->getTimestamp()));
+              }else{ //tow hour and diff day
+                printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp()));
+              }
+            }else{
+              printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d', $dStart->getTimestamp()),date_i18n('M', $dStart->getTimestamp()));
+            }
             
             print '</div>';
             print '<div class="gcalendar-event-desc">';
             printf ("%s",$event->getSummary());
             print '</div>';
+            print '<div class="gcalendar-event-clear"></div>';
             print '<div class="gcalendar-event-more">';
             printf ("<a href=\"%s\" target=\"_blank\">".__('View More ...','gcalendar')."</a>",$event->getHtmlLink());
             print '</div>';
@@ -81,6 +85,7 @@ class gCalendar_Widget extends WP_Widget
           }
           print '</div>';
         }
+        print '<div class="gcalendar-cal-link"><a href="https://calendar.google.com/calendar/embed?src='.GCAL_CALENDAR_ID.'" target="_blank">'.__('Agenda','gcalendar').'</a></div>';
         print "</section>";
     }
 }

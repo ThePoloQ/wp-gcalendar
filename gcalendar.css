@@ -10,3 +10,41 @@
 .gcalendar-events .gcalendar-event:last-child{
  border-bottom: none;
 }
+
+.gcalendar-event-clear {
+  clear: both;
+}
+
+.gcalendar-event-date{
+  float:left;
+  max-width: 20%;
+  min-width: 18%;
+  border: solid 2px #555;
+}
+
+.gcalendar-event-desc{
+  float:left;
+  max-width: 80%;
+  padding: 3px;
+}
+
+.gcalendar-event-more{
+  text-align:right;
+}
+
+
+.gcalendar-event-date-up {
+  padding:2px;
+  text-align: center;
+}
+
+.gcalendar-event-date-down {
+  padding:2px;
+  background-color: #555;
+  color:white;
+  text-align: center;
+}
+
+.gcalendar-cal-link {
+  text-align: right;
+}
