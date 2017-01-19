@@ -1,0 +1,12 @@
+.gcalendar-event {
+ padding: 4px;
+ background-color: white;
+ border-bottom: 1px solid #ddd;
+}
+
+.gcalendar-events {
+ border: 1px solid #ddd;
+}
+.gcalendar-events .gcalendar-event:last-child{
+ border-bottom: none;
+}

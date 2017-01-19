@@ -20,7 +20,13 @@ class gCalendar
   public function __construct()
   {
      add_action('widgets_init', function(){register_widget('gCalendar_Widget');});
+     add_action( 'init', 'gcalendar_styles' );
   }
 }
 
 new gCalendar();
+
+function gcalendar_styles() {
+  wp_register_style('gcalendar-css', plugins_url('gcalendar.css',__FILE__ ));
+  wp_enqueue_style('gcalendar-css');
+}
