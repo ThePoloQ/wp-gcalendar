@@ -35,7 +35,8 @@ class gCalendar_Widget extends WP_Widget
         if (count($results->getItems()) == 0) {
           print '<p>'.__('No upcoming events found.','gcalendar')."</p>";
         } else {
-          print "<h3 class=\"widget-title\" style=\"display: table\"><span class=\"dashicons dashicons-calendar-alt\"></span>&nbsp;".__('Upcoming Events','gcalendar')."</h3>";
+          //<span class=\"dashicons dashicons-calendar-alt\"></span>&nbsp;
+          print "<h3 class=\"widget-title\" style=\"display: table\">".__('Upcoming Events','gcalendar')."</h3>";
           print "<div class=\"gcalendar-events\">";
           foreach ($results->getItems() as $event) {
             print '<div class="gcalendar-event">';
@@ -66,6 +67,8 @@ class gCalendar_Widget extends WP_Widget
             if (strcmp($end,$start) !==0 ){
               if (strcmp(date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp())) == 0){ //tow hour with the same day
                 printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d', $dStart->getTimestamp()),date_i18n('M', $dEnd->getTimestamp()));
+              }else if ($dtStart === NULL){ //event on all days
+                printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp() - 3600*24));
               }else{ //tow hour and diff day
                 printf ('<div class="gcalendar-event-date-up">%s</div><div class="gcalendar-event-date-down">%s</div>',date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp()));
               }
@@ -75,12 +78,23 @@ class gCalendar_Widget extends WP_Widget
             
             print '</div>';
             print '<div class="gcalendar-event-desc">';
+            print '<div class="gcalendar-event-desc-sum">';
             printf ("%s",$event->getSummary());
+            print '</div>';
+            print '<div class="gcalendar-event-desc-time">';
+              if (strcmp($end,$start) !==0 ){
+                if (strcmp(date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp())) == 0){ //tow hour with the same day
+                  printf (__('From %s to %s'),date_i18n('H:i', $dStart->getTimestamp()),date_i18n('H:i', $dEnd->getTimestamp()));
+                }else if ($dtStart !== NULL){ //tow hour and diff day
+                  printf (__("From %s to %s"),date_i18n('d M, H:i', $dStart->getTimestamp()),date_i18n('d M, H:i', $dEnd->getTimestamp()));
+                }
+              }
+            print '</div>';
             print '</div>';
             print '<div class="gcalendar-event-clear"></div>';
             print '<div class="gcalendar-event-more">';
-            printf ("<a href=\"%s\" target=\"_blank\">".__('View More ...','gcalendar')."</a>",$event->getHtmlLink());
-            print '</div>';
+            printf ("<a href=\"%s\" target=\"_blank\"><b>+</b></a>",$event->getHtmlLink());
+            print '</div>';            
             print '</div>';
           }
           print '</div>';

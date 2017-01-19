@@ -17,21 +17,31 @@
 
 .gcalendar-event-date{
   float:left;
-  max-width: 20%;
-  min-width: 18%;
+  width: 20%;
   border: solid 2px #555;
 }
 
 .gcalendar-event-desc{
   float:left;
-  max-width: 80%;
+  width: 80%;
   padding: 3px;
 }
 
 .gcalendar-event-more{
   text-align:right;
+  font-size: 1.1rem;
+  
 }
 
+.gcalendar-event-more a:hover{
+  text-decoration: none;
+}
+
+.gcalendar-event-more a{
+  border: 2px solid;
+  padding-left: 3px;
+  padding-right: 3px;
+}
 
 .gcalendar-event-date-up {
   padding:2px;
@@ -47,4 +57,12 @@
 
 .gcalendar-cal-link {
   text-align: right;
+}
+
+.gcalendar-event-desc-sum {
+  text-transform: uppercase;
+}
+
+.gcalendar-event-desc-time {
+  font-size: 1rem;
 }
