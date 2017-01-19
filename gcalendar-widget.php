@@ -62,7 +62,7 @@ class gCalendar_Widget extends WP_Widget
               $end = date_i18n(get_option('date_format'), $dEnd->getTimestamp() + $hOffset * 3600) .' @ '. date_i18n(get_option('time_format'), $dEnd->getTimestamp() + $hOffset * 3600,true);
             }else{
               $dEnd = DateTime::createFromFormat('Y-m-d', $event->getEnd()->getDate());
-              $end = date_i18n(get_option('date_format'), $dEnd->getTimestamp() - 3600*24,true);
+              $end = date_i18n(get_option('date_format'), $dEnd->getTimestamp() - 3600*24);
             }
             
             if ($end != $start)            
