@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: widget.php conversion\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-24 11:05+0000\n"
+"PO-Revision-Date: 2017-01-24 11:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: Unknown\n"
+"Language: zxx\n"
+"Plural-Forms: nplurals=2; plural=n!=1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Loco-Source-Locale: fr_FR\n"
+"X-Loco-Parser: loco_parse_php\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: stdin:37
+msgid "No upcoming events found."
+msgstr "Pas d'évènements à venir"
+
+#: stdin:40
+msgid "Upcoming Events"
+msgstr "Évènements à venir"
+
+#: stdin:88 stdin:90
+#, php-format
+msgid "From %s to %s"
+msgstr "Du %s au %s"
+
+#: stdin:97
+msgid "Read more"
+msgstr "Voir le détail"
+
+#: stdin:103
+msgid "Google Agenda"
+msgstr "Agenda Google"
+
+#: stdin:103
+msgid "Agenda"
+msgstr "Agenda"
