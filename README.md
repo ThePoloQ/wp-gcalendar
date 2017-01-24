@@ -24,6 +24,6 @@ File: gcalendar-param.php
 
 ```php
 define('GCAL_APPLICATION_NAME', 'APP_NAME');
-define('GCAL_APP_KEY', ' GOOGLE_APP_KEY');
+define('GCAL_API_KEY', ' GOOGLE_API_KEY');
 define('GCAL_CALENDAR_ID','GOOGLE_ID@group.calendar.google.com');
 ```
