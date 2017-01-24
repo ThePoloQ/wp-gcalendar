@@ -20,7 +20,8 @@ class gCalendar
   public function __construct()
   {
      add_action('widgets_init', function(){register_widget('gCalendar_Widget');});
-     add_action( 'init', 'gcalendar_styles' );
+     add_action( 'wp_enqueue_scripts', 'gcalendar_styles',11 );
+     add_action( 'plugins_loaded', 'gcalendar_load_textdomain' );
   }
 }
 
@@ -29,4 +30,9 @@ new gCalendar();
 function gcalendar_styles() {
   wp_register_style('gcalendar-css', plugins_url('gcalendar.css',__FILE__ ));
   wp_enqueue_style('gcalendar-css');
+}
+
+
+function gcalendar_load_textdomain() {
+  load_plugin_textdomain( 'gcalendar', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
 }

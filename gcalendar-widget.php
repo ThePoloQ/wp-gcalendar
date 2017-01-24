@@ -14,7 +14,7 @@ class gCalendar_Widget extends WP_Widget
     {
         $client = new Google_Client();
         $client->setApplicationName(GCAL_APPLICATION_NAME);
-        $client->setDeveloperKey(GCAL_APP_KEY);
+        $client->setDeveloperKey(GCAL_API_KEY);
 
         $service = new Google_Service_Calendar($client);
 
@@ -79,7 +79,7 @@ class gCalendar_Widget extends WP_Widget
             print '</div>';
             print '<div class="gcalendar-event-desc">';
             print '<div class="gcalendar-event-desc-sum">';
-            printf ("%s",$event->getSummary());
+            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\">%s</a>",$event->getHtmlLink(),$event->getSummary(),$event->getSummary());
             print '</div>';
             print '<div class="gcalendar-event-desc-time">';
               if (strcmp($end,$start) !==0 ){
@@ -93,13 +93,13 @@ class gCalendar_Widget extends WP_Widget
             print '</div>';
             print '<div class="gcalendar-event-clear"></div>';
             print '<div class="gcalendar-event-more">';
-            printf ("<a href=\"%s\" target=\"_blank\"><b>+</b></a>",$event->getHtmlLink());
+            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\"><b>+</b></a>",$event->getHtmlLink(),__('Read more','gcalendar'));
             print '</div>';            
             print '</div>';
           }
           print '</div>';
         }
-        print '<div class="gcalendar-cal-link"><a href="https://calendar.google.com/calendar/embed?src='.GCAL_CALENDAR_ID.'" target="_blank">'.__('Agenda','gcalendar').'</a></div>';
+        print '<div class="gcalendar-cal-link"><a href="https://calendar.google.com/calendar/embed?src='.GCAL_CALENDAR_ID.'" title="'.__('Google Agenda','gcalendar').'" target="_blank">'.__('Agenda','gcalendar').'</a></div>';
         print "</section>";
     }
 }
