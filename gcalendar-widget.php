@@ -84,9 +84,9 @@ class gCalendar_Widget extends WP_Widget
             print '<div class="gcalendar-event-desc-time">';
               if (strcmp($end,$start) !==0 ){
                 if (strcmp(date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp())) == 0){ //tow hour with the same day
-                  printf (__('From %s to %s'),date_i18n('H:i', $dStart->getTimestamp()),date_i18n('H:i', $dEnd->getTimestamp()));
+                  printf (__('From %s to %s'),date_i18n('H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('H:i', $dEnd->getTimestamp() + $hOffset * 3600));
                 }else if ($dtStart !== NULL){ //tow hour and diff day
-                  printf (__("From %s to %s"),date_i18n('d M, H:i', $dStart->getTimestamp()),date_i18n('d M, H:i', $dEnd->getTimestamp()));
+                  printf (__('From %s to %s'),date_i18n('d M, H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('d M, H:i', $dEnd->getTimestamp() + $hOffset * 3600));
                 }
               }
             print '</div>';
