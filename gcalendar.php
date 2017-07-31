@@ -10,8 +10,10 @@ License: GPL3
 Text Domain: gcalendar
 */
 
+/*
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+*/
 
 include_once plugin_dir_path( __FILE__ ).'/gcalendar-widget.php';
 
@@ -22,6 +24,7 @@ class gCalendar
      add_action('widgets_init', function(){register_widget('gCalendar_Widget');});
      add_action( 'wp_enqueue_scripts', 'gcalendar_styles',11 );
      add_action( 'plugins_loaded', 'gcalendar_load_textdomain' );
+     add_filter( 'query_vars', 'gcalendar_add_query_vars_filter' );
   }
 }
 
@@ -35,4 +38,10 @@ function gcalendar_styles() {
 
 function gcalendar_load_textdomain() {
   load_plugin_textdomain( 'gcalendar', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+}
+
+function gcalendar_add_query_vars_filter( $vars ){
+  $vars[] = "gPageToken";
+  $vars[] = "gPrevPageToken";
+  return $vars;
 }

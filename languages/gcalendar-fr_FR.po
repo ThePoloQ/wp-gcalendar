@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gcalendar-widget.php conversion\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-16 10:14+0000\n"
-"PO-Revision-Date: 2017-03-16 10:17+0000\n"
+"POT-Creation-Date: 2017-05-18 09:24+0000\n"
+"PO-Revision-Date: 2017-05-18 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: Unknown\n"
 "Language: zxx\n"
@@ -15,27 +15,40 @@ msgstr ""
 "X-Loco-Parser: loco_parse_php\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: stdin:36
+#: stdin:49
 msgid "No upcoming events found."
-msgstr "Pas d'évènements à venir"
+msgstr "Pas d'évènements à venir."
 
-#: stdin:39
+#: stdin:52
 msgid "Upcoming Events"
 msgstr "Évènements à venir"
 
-#: stdin:87 stdin:89
+#: stdin:100
 #, php-format
 msgid "From %s to %s"
-msgstr "De %s à %s"
+msgstr "Du %s au %s"
 
-#: stdin:96
+#: stdin:102
+#, php-format
+msgid "From %s to %s"
+msgstr "Du %s au %s"
+
+#: stdin:109
 msgid "Read more"
 msgstr "Voir le détail"
 
-#: stdin:102
+#: stdin:115
+msgid "Previous events"
+msgstr "Précédents"
+
+#: stdin:116
+msgid "Next events"
+msgstr "Suivants"
+
+#: stdin:120
 msgid "Google Agenda"
 msgstr "Agenda Google"
 
-#: stdin:102
+#: stdin:120
 msgid "Agenda"
 msgstr "Agenda"

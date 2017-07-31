@@ -12,33 +12,46 @@ class gCalendar_Widget extends WP_Widget
 
     public function widget($args, $instance)
     {
+	$gcal_opts = get_option( 'gcalendar_reader_settings');
         $client = new Google_Client();
-        $client->setApplicationName(GCAL_APPLICATION_NAME);
-        $client->setDeveloperKey(GCAL_API_KEY);
+        $client->setApplicationName($gcal_opts['gcalendar_reader_app_name']);
+        $client->setDeveloperKey($gcal_opts['gcalendar_reader_api_key']);
 
         $service = new Google_Service_Calendar($client);
 
-        // Print the next 10 events on the user's calendar.
-        $calendarId = GCAL_CALENDAR_ID;
+        $calendarId = $gcal_opts['gcalendar_reader_calendar_id'];
+
+	$gPageToken = get_query_var( 'gPageToken', null );
+
         $optParams = array(
-          'maxResults' => GCAL_MAX_RESULTS,
+          'maxResults' => $gcal_opts['gcalendar_reader_max_results'],
           'orderBy' => 'startTime',
           'singleEvents' => TRUE,
-          'timeMin' => date('c'),
+          'timeMin' => date('o-m-d').'T00:00:00'.date('P'),
+          'pageToken' => $gPageToken,
         );
+
+	
+        if (false && $gPageToken){
+          $optParams = array(
+	    'pageToken' => $gPageToken,
+	  );
+	}
+
         $results = $service->events->listEvents($calendarId, $optParams);
 
         $date_format = get_option( 'date_format' );
         $time_format = get_option( 'time_format' );  
 
         print '<section class="widget wdiget-gcalendar">';
-        if (count($results->getItems()) == 0) {
+        $events = $results->getItems();
+        if (count($events) == 0) {
           print '<p>'.__('No upcoming events found.','gcalendar')."</p>";
         } else {
           //<span class=\"dashicons dashicons-calendar-alt\"></span>&nbsp;
           print "<h3 class=\"widget-title\" style=\"display: table\">".__('Upcoming Events','gcalendar')."</h3>";
           print "<div class=\"gcalendar-events\">";
-          foreach ($results->getItems() as $event) {
+          foreach ($events as $event) {
             print '<div class="gcalendar-event">';
             print '<div class="gcalendar-event-date">';
 
@@ -79,27 +92,40 @@ class gCalendar_Widget extends WP_Widget
             print '</div>';
             print '<div class="gcalendar-event-desc">';
             print '<div class="gcalendar-event-desc-sum">';
-            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\">%s</a>",$event->getHtmlLink(),$event->getSummary(),$event->getSummary());
+            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\">%s</a>",$event->getHtmlLink(),esc_attr($event->getSummary()),esc_attr($event->getSummary()));
             print '</div>';
             print '<div class="gcalendar-event-desc-time">';
               if (strcmp($end,$start) !==0 ){
                 if (strcmp(date_i18n('d M', $dStart->getTimestamp()),date_i18n('d M', $dEnd->getTimestamp())) == 0){ //tow hour with the same day
-                  printf (__('From %s to %s'),date_i18n('H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('H:i', $dEnd->getTimestamp() + $hOffset * 3600));
+                  printf (__('From %s to %s','gcalendar'),date_i18n('H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('H:i', $dEnd->getTimestamp() + $hOffset * 3600));
                 }else if ($dtStart !== NULL){ //tow hour and diff day
-                  printf (__('From %s to %s'),date_i18n('d M, H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('d M, H:i', $dEnd->getTimestamp() + $hOffset * 3600));
+                  printf (__('From %s to %s','gcalendar'),date_i18n('d M, H:i', $dStart->getTimestamp() + $hOffset * 3600),date_i18n('d M, H:i', $dEnd->getTimestamp() + $hOffset * 3600));
                 }
               }
             print '</div>';
             print '</div>';
             print '<div class="gcalendar-event-clear"></div>';
             print '<div class="gcalendar-event-more">';
-            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\"><b>+</b></a>",$event->getHtmlLink(),__('Read more','gcalendar'));
+            printf ("<a href=\"%s\" target=\"_blank\" title=\"%s\"><b>+</b></a>",$event->getHtmlLink(),__('Read more','gcalendar').' : '.esc_attr($event->getSummary()));
             print '</div>';            
             print '</div>';
           }
           print '</div>';
+          $pageToken = $results->getNextPageToken();
+          $gPrevPageToken = get_query_var( 'gPrevPageToken', null );
+          $gPrevPage = "";
+          $nextTextAlign = "";
+          if ($gPageToken) { $gPrevPage = "&gPrevPageToken=".$gPageToken;}
+	  if ($gPrevPageToken || $gPageToken) { $nextTextAlign ="text-align:right;";}
+
+          if ($gPrevPageToken || $pageToken)  { print "<div>"; }
+	  if ($gPrevPageToken || $gPageToken) { print "<div style=\"width:50%;float:left;\"><a href=\"?gPageToken=".$gPrevPageToken."\">".__('Previous events','gcalendar')."</a></div>";}
+          if ($pageToken) { print "<div style=\"width:50%;float:left;".$nextTextAlign."\"><a href=\"?gPageToken=".$pageToken.$gPrevPage."\">".__('Next events','gcalendar')."</a></div>";}
+          if ($gPrevPageToken || $pageToken)  { print "</div>"; }
+
         }
-        print '<div class="gcalendar-cal-link"><a href="https://calendar.google.com/calendar/embed?src='.GCAL_CALENDAR_ID.'" title="'.__('Google Agenda','gcalendar').'" target="_blank">'.__('Agenda','gcalendar').'</a></div>';
+        print '<div class="gcalendar-cal-link"><a href="https://calendar.google.com/calendar/embed?src='.$gcal_opts['gcalendar_reader_calendar_id'].'" title="'.__('Google Agenda','gcalendar').'" target="_blank">'.__('Agenda','gcalendar').'</a></div>';
         print "</section>";
+
     }
 }

@@ -26,6 +26,7 @@
   float:left;
   width: 20%;
   border: solid 2px #555;
+  font-size: 16px;
 }
 
 .gcalendar-event-desc{
